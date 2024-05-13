@@ -1,21 +1,17 @@
 from django.contrib import admin
-from .models import Profile, ProductType, Product, Comment, Order, MoreImages, Shipping
+from .models import Profile, ProductType, Product, Order, MoreImages, Shipping
 
 @admin.register(Product)
 class AdminProduct(admin.ModelAdmin):
     list_display = ['name', 'type', 'price']
 
-@admin.register(Comment)
-class AdminComment(admin.ModelAdmin):
-    list_display = ['user', 'product', 'created_at']
-
 @admin.register(Order)
 class AdminOrder(admin.ModelAdmin):
-    list_display = ['user', 'product']
+    list_display = ['user', 'product', 'quantity']
 
 @admin.register(Shipping)
 class AdminShipping(admin.ModelAdmin):
-    list_display = ['order', 'time', 'status']
+    list_display = ['time', 'status']
 
 admin.site.register(ProductType)
 admin.site.register(Profile)

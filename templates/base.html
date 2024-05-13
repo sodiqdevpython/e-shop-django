@@ -1,4 +1,5 @@
 {% load static %}
+{% load template_filters %}
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -48,7 +49,7 @@
 						<li><a href="#"><i class="fa fa-map-marker"></i> Toshkent sh </a></li>
 					</ul>
 					<ul class="header-links pull-right">
-						<li><a href="#"><i class="fa fa-dollar"></i> SUM</a></li>
+						<li><a href="#"><i class="fa fa-dollar"></i> SO'M</a></li>
 						<li><a href="#"><i class="fa fa-user-o"></i> Akkaunt</a></li>
 					</ul>
 				</div>
@@ -63,11 +64,6 @@
 					<div class="row">
 						<!-- LOGO -->
 						<div class="col-md-3">
-							<div class="header-logo">
-								<a href="#" class="logo">
-									<img src="{% static './img/logo.png' %}" alt="">
-								</a>
-							</div>
 						</div>
 						<!-- /LOGO -->
 
@@ -91,39 +87,27 @@
 									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 										<i class="fa fa-shopping-cart"></i>
 										<span>Savatda</span>
-										<div class="qty">3</div>
+										<div class="qty">{{ order_list.count }}</div>
 									</a>
 									<div class="cart-dropdown">
 										<div class="cart-list">
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="{% static './img/product01.png' %}" alt="">
+											{% for i in order_list %}
+												<div class="product-widget">
+													<div class="product-img">
+														<img src="{{ i.product.image.url }}" alt="">
+													</div>
+													<div class="product-body">
+														<h3 class="product-name"><a href="#">{{ i.product.name|slice:20 }}</a></h3>
+														<h4 class="product-price"><span class="qty"><span style="color: red;">{{ i.quantity }}ta</span></span>{{ i.product.price|sum_converter }} so'm</h4>
+													</div>
 												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
-												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
-											</div>
-
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="{% static './img/product02.png' %}" alt="">
-												</div>
-												<div class="product-body">
-													<h3 class="product-name"><a href="#">product name goes here</a></h3>
-													<h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-												</div>
-												<button class="delete"><i class="fa fa-close"></i></button>
-											</div>
+											{% endfor %}
 										</div>
 										<div class="cart-summary">
-											<small>3 Item(s) selected</small>
-											<h5>SUBTOTAL: $2940.00</h5>
+											<h5>Jami: {{ price|sum_converter }} so'm</h5>
 										</div>
 										<div class="cart-btns">
-											<a href="#">View Cart</a>
-											<a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+											<a style="width: 100%; background-color: red;" href="{% url 'checkout' %}">Buyurtma qilish  <i class="fa fa-arrow-circle-right"></i></a>
 										</div>
 									</div>
 								</div>
@@ -159,6 +143,7 @@
 					<ul class="main-nav nav navbar-nav">
 						<li class="active"><a href="{% url 'home' %}">Asosiy</a></li>
 						<li><a href="{% url 'store' %}">Mahsulotlar</a></li>
+						<li><a href="{% url 'checkout' %}">Buyurtmalar</a></li>
 					</ul>
 					<!-- /NAV -->
 				</div>

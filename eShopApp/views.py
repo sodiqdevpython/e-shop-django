@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
-from .models import Product, MoreImages
+from .models import Product, MoreImages, Order
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from .forms import CreateOrderForm
+from django.contrib import messages
 
 
 def home(request):
@@ -67,13 +69,14 @@ def detail_products(request, id):
     related_products = Product.objects.filter(type__name=data.type.name)
     more_images = MoreImages.objects.filter(product=data)
 
-    if request.method == "POST":
+    if request.method == "POST" and request.user.is_authenticated:
         form = CreateOrderForm(request.POST or None)
         if form.is_valid():
             new_order = form.save(commit=False)
             new_order.user = request.user
             new_order.product = data
             new_order.save()
+            messages.success(request, "Sizda ushbu mahsulotdan bor")
             return redirect('product_detail', id)
     else:
         form = CreateOrderForm()
@@ -90,3 +93,15 @@ def detail_products(request, id):
 
 def login(request):
     return render(request, 'login.html')
+
+@login_required
+def checkout(request):
+
+    return render(request, 'checkout.html')
+
+@login_required
+def delete_order(request, id):
+    if request.method=='POST':
+        data = get_object_or_404(Order, id=id)
+        data.delete()
+        return redirect('checkout')
