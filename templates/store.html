@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load template_filters %}
+{% block content %}
+
+		<!-- SECTION -->
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<!-- ASIDE -->
+					<div id="aside" class="col-md-3">
+						<!-- aside Widget -->
+						<div class="aside">
+							<h3 class="aside-title">Kategoriya</h3>
+							<div class="checkbox-filter">
+								<a href="{% url 'store' %}">Hammasi</a><br><br>
+								{% for i in get_types %}
+								<div class="input-checkbox">
+
+									<a href="{% url 'filtering_products' i.name %}">{{ i.name }}</a>
+								</div>
+								{% endfor %}
+							</div>
+						</div>
+						<!-- /aside Widget -->
+					</div>
+					<!-- /ASIDE -->
+
+					<!-- STORE -->
+					<div id="store" class="col-md-9">
+
+						<!-- store products -->
+						<div class="row">
+							<!-- product -->
+							{% for i in page_obj %}
+								<a href="{% url 'product_detail' i.id %}">
+									<div class="col-md-4 col-xs-6">
+										<div class="product">
+											<div class="product-img">
+												<img src="{{ i.image.url }}" alt="">
+											</div>
+											<div class="product-body">
+												<p class="product-category">{{ i.type }}</p>
+												<h3 class="product-name"><a href="{% url 'product_detail' i.id %}">{{ i.name }}</a></h3>
+												<h4 class="product-price">{{ i.price|sum_converter }} sum</h4>
+												<div class="product-rating">
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+												</div>
+												<div class="product-btns">
+													<button class="quick-view"><a href="{% url 'product_detail' i.id %}"><i class="fa fa-eye"></i><span class="tooltipp">ko'rish</span></a></button>
+												</div>
+											</div>
+											<div class="add-to-cart">
+												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i><a href="{% url 'product_detail' i.id %}">Ko'rish</a></button>
+											</div>
+										</div>
+									</div>
+								</a>
+							{% endfor %}
+							<!-- /product -->
+						</div>
+						<!-- /store products -->
+
+						<!-- store bottom filter -->
+						<div class="store-filter clearfix">
+
+    <ul class="store-pagination">
+        {% if page_obj.has_previous %}
+            <li><a href="?page={{ page_obj.previous_page_number }}"><<</a></li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <li class="active">{{ num }}</li>
+            {% else %}
+                <li><a href="?page={{ num }}">{{ num }}</a></li>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <li><a href="?page={{ page_obj.next_page_number }}">>></a></li>
+        {% endif %}
+    </ul>
+</div>
+
+						<!-- /store bottom filter -->
+					</div>
+					<!-- /STORE -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /SECTION -->
+
+{% endblock content %}

@@ -1,0 +1,402 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load template_filters %}
+{% block content %}
+		<!-- SECTION -->
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<!-- shop -->
+					{% for i in get_data_header %}
+						<div class="col-md-4 col-xs-6">
+							<div class="shop">
+								<div class="shop-img">
+									<img style="height: 300px;" src="{{ i.image.url }}" alt="">
+								</div>
+								<div class="shop-body">
+									<h3>{{ i.name|slice:15 }}</h3>
+									<a href="{% url 'product_detail' i.id %}" class="cta-btn">Xarid qilish <i class="fa fa-arrow-circle-right"></i></a>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+					<!-- /shop -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /SECTION -->
+
+		<!-- SECTION -->
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+
+					<!-- section title -->
+					<div class="col-md-12">
+						<div class="section-title">
+							<h3 class="title">Oxirgi tovarlar</h3>
+							<div class="section-nav">
+								<ul class="section-tab-nav tab-nav">
+									{% for i in get_types %}
+										{% if forloop.first %}
+											<li class="active"><a data-toggle="tab" href="#tab1">{{ i.name }}</a></li>
+										{% else %}
+											<li><a data-toggle="tab" href="#tab1">{{ i.name }}</a></li>
+										{% endif %}
+									{% endfor %}
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!-- /section title -->
+
+					<!-- Products tab & slick -->
+					<div class="col-md-12">
+						<div class="row">
+							<div class="products-tabs">
+								<!-- tab -->
+								<div id="tab1" class="tab-pane active">
+									<div class="products-slick" data-nav="#slick-nav-1">
+										<!-- product -->
+										{% for i in last_products %}
+										<div class="product">
+											<div class="product-img">
+												<img src="{{ i.image.url }}" alt="">
+												<div class="product-label">
+												</div>
+											</div>
+											<div class="product-body">
+												<p class="product-category">{{ i.type }}</p>
+												<h3 class="product-name"><a href="{% url 'product_detail' i.id %}">{{ i.name }}</a></h3>
+												<h4 class="product-price">{{ i.price|sum_converter }} sum</h4>
+												<div class="product-rating">
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+												</div>
+												<div class="product-btns">
+													<button class="quick-view"><i class="fa fa-eye"><a href="{% url 'product_detail' i.id %}">ko'rish</a></i><span class="tooltipp"></span></button>
+												</div>
+											</div>
+											<div class="add-to-cart">
+												<a href="{% url 'product_detail' i.id %}"><button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>  Savatga qo'shish </button></a>
+											</div>
+										</div>
+										{% endfor %}
+										<!-- /product -->
+									</div>
+									<div id="slick-nav-1" class="products-slick-nav"></div>
+								</div>
+								<!-- /tab -->
+							</div>
+						</div>
+					</div>
+					<!-- Products tab & slick -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /SECTION -->
+
+		<!-- HOT DEAL SECTION -->
+		<div id="hot-deal" class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="hot-deal">
+							<ul class="hot-deal-countdown" id="countdown">
+    <li>
+        <div>
+            <h3 id="days">02</h3>
+            <span>Kun</span>
+        </div>
+    </li>
+    <li>
+        <div>
+            <h3 id="hours">10</h3>
+            <span>Soat</span>
+        </div>
+    </li>
+    <li>
+        <div>
+            <h3 id="minutes">34</h3>
+            <span>Minut</span>
+        </div>
+    </li>
+    <li>
+        <div>
+            <h3 id="seconds">60</h3>
+            <span>Sekund</span>
+        </div>
+    </li>
+</ul>
+
+							<h2 class="text-uppercase">Aksiyada</h2>
+						</div>
+					</div>
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /HOT DEAL SECTION -->
+
+		<!-- SECTION -->
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+
+					<!-- section title -->
+					<div class="col-md-12">
+						<div class="section-title">
+							<h3 class="title">Topda</h3>
+							<div class="section-nav">
+								<ul class="section-tab-nav tab-nav">
+									{% for i in get_types %}
+										{% if forloop.first %}
+											<li class="active"><a data-toggle="tab" href="#tab2">{{ i.name }}</a></li>
+										{% else %}
+											<li><a data-toggle="tab" href="#tab2">{{ i.name }}</a></li>
+										{% endif %}
+									{% endfor %}
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!-- /section title -->
+
+					<!-- Products tab & slick -->
+					<div class="col-md-12">
+						<div class="row">
+							<div class="products-tabs">
+								<!-- tab -->
+								<div id="tab2" class="tab-pane fade in active">
+									<div class="products-slick" data-nav="#slick-nav-2">
+										{% for i in get_data_header %}
+										<!-- product -->
+										<div class="product">
+											<div class="product-img">
+												<img src="{{ i.image.url }}" alt="">
+											</div>
+											<div class="product-body">
+												<p class="product-category">{{ i.type }}</p>
+												<h3 class="product-name"><a href="{% url 'product_detail' i.id %}">{{ i.name|truncatewords:5 }}</a></h3>
+												<h4 class="product-price">{{ i.price|sum_converter }} sum</h4>
+												<div class="product-rating">
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star-o"></i>
+												</div>
+												<div class="product-btns">
+													<button class="quick-view"><a href="{% url 'product_detail' i.id %}"><i class="fa fa-eye"></i><span class="tooltipp">ko'rish</span></a></button>
+												</div>
+											</div>
+											<div class="add-to-cart">
+												<a href="{% url 'product_detail' i.id %}"><button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> savatga qo'shish</button></a>
+											</div>
+										</div>
+										<!-- /product -->
+										{% endfor %}
+									</div>
+									<div id="slick-nav-2" class="products-slick-nav"></div>
+								</div>
+								<!-- /tab -->
+							</div>
+						</div>
+					</div>
+					<!-- /Products tab & slick -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /SECTION -->
+
+		<!-- SECTION -->
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<div class="col-md-4 col-xs-6">
+						<div class="section-title">
+							<h4 class="title">Ko'p sotilayotganlar</h4>
+							<div class="section-nav">
+								<div id="slick-nav-3" class="products-slick-nav"></div>
+							</div>
+						</div>
+
+						<div class="products-widget-slick" data-nav="#slick-nav-3">
+							<div>
+								{% for i in most_purchased2 %}
+								<!-- product widget -->
+								<div class="product-widget">
+									<div class="product-img">
+										<img src="{{ i.image.url }}" alt="">
+									</div>
+									<div class="product-body">
+										<p class="product-category">{{ i.type }}</p>
+										<h3 class="product-name"><a href="{% url 'product_detail' i.id %}">{{ i.name }}</a></h3>
+										<h4 class="product-price">{{ i.price|sum_converter }}</del></h4>
+									</div>
+								</div>
+								<!-- product widget -->
+								{% endfor %}
+							</div>
+
+							<div>
+								{% for i in get_data_header %}
+								<!-- product widget -->
+								<div class="product-widget">
+									<div class="product-img">
+										<img src="{{ i.image.url }}" alt="">
+									</div>
+									<div class="product-body">
+										<p class="product-category">{{ i.type }}</p>
+										<h3 class="product-name"><a href="{% url 'product_detail' i.id %}">{{ i.name }}</a></h3>
+										<h4 class="product-price">{{ i.price|sum_converter }}</del></h4>
+									</div>
+								</div>
+								<!-- product widget -->
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-4 col-xs-6">
+						<div class="section-title">
+							<h4 class="title">Arzon narxlarda</h4>
+							<div class="section-nav">
+								<div id="slick-nav-4" class="products-slick-nav"></div>
+							</div>
+						</div>
+
+						<div class="products-widget-slick" data-nav="#slick-nav-4">
+							<div>
+								{% for i in cheaper_products1 %}
+								<!-- product widget -->
+								<div class="product-widget">
+									<div class="product-img">
+										<img src="{{ i.image.url }}" alt="">
+									</div>
+									<div class="product-body">
+										<p class="product-category">{{ i.type }}</p>
+										<h3 class="product-name"><a href="{% url 'product_detail' i.id %}">{{ i.name }}</a></h3>
+										<h4 class="product-price">{{ i.price|sum_converter }}</del></h4>
+									</div>
+								</div>
+								<!-- product widget -->
+								{% endfor %}
+							</div>
+						</div>
+					</div>
+
+					<div class="clearfix visible-sm visible-xs"></div>
+
+					<div class="col-md-4 col-xs-6">
+						<div class="section-title">
+							<h4 class="title">Ko'p sotilayotganlar</h4>
+							<div class="section-nav">
+								<div id="slick-nav-5" class="products-slick-nav"></div>
+							</div>
+						</div>
+
+						<div class="products-widget-slick" data-nav="#slick-nav-5">
+							<div>
+								{% for i in most_purchased1 %}
+								<!-- product widget -->
+								<div class="product-widget">
+									<div class="product-img">
+										<img src="{{ i.image.url }}" alt="">
+									</div>
+									<div class="product-body">
+										<p class="product-category">{{ i.type }}</p>
+										<h3 class="product-name"><a href="{% url 'product_detail' i.id %}">{{ i.name }}</a></h3>
+										<h4 class="product-price">{{ i.price|sum_converter }}</del></h4>
+									</div>
+								</div>
+								<!-- product widget -->
+								{% endfor %}
+
+
+
+							</div>
+
+							<div>
+								{% for i in most_purchased2 %}
+								<!-- product widget -->
+								<div class="product-widget">
+									<div class="product-img">
+										<img src="{{ i.image.url }}" alt="">
+									</div>
+									<div class="product-body">
+										<p class="product-category">{{ i.type }}</p>
+										<h3 class="product-name"><a href="{% url 'product_detail' i.id %}">{{ i.name }}</a></h3>
+										<h4 class="product-price">{{ i.price|sum_converter }}</del></h4>
+									</div>
+								</div>
+								<!-- product widget -->
+								{% endfor %}
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /SECTION -->
+
+<script>
+    // Function to update the countdown timer
+    function updateCountdown() {
+        var now = new Date();
+        var targetDate = new Date("2024-05-10T00:00:00"); // Set your target end date and time here
+
+        // Calculate the difference in milliseconds between now and the target date
+        var difference = now - targetDate;
+
+        // Calculate days, hours, minutes, and seconds
+        var days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        // Update the HTML elements with the new values
+        document.getElementById('days').innerHTML = formatTime(days);
+        document.getElementById('hours').innerHTML = formatTime(hours);
+        document.getElementById('minutes').innerHTML = formatTime(minutes);
+        document.getElementById('seconds').innerHTML = formatTime(seconds);
+    }
+
+    // Function to format time (add leading zero if needed)
+    function formatTime(time) {
+        return time < 10 ? "0" + time : time;
+    }
+
+    // Update the countdown timer every second
+    setInterval(updateCountdown, 1000);
+
+    // Initial call to update the countdown when the page loads
+    updateCountdown();
+</script>
+
+
+{% endblock content %}
