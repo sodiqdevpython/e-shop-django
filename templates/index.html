@@ -3,6 +3,13 @@
 {% load template_filters %}
 {% block content %}
 		<!-- SECTION -->
+		{% if messages %}
+		<script>
+			{% for message in messages %}
+				alert({{ message }})
+			{% endfor %}
+		</script>
+		{% endif %}
 		<div class="section">
 			<!-- container -->
 			<div class="container">

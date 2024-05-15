@@ -1,17 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class Profile(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    tel_number = models.CharField(max_length=20)
-
-    def __str__(self):
-        return self.user.username
-
-    class Meta:
-        verbose_name = 'Profil'
-        verbose_name_plural = 'Profillar'
-
 class ProductType(models.Model):
     name = models.CharField(max_length=20, unique=True)
 
@@ -51,13 +40,14 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveSmallIntegerField(default=1)
+    is_shipped = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Buyurtma'
         verbose_name_plural = 'Buyurtmalar'
 
     def __str__(self):
-        return str(self.user)
+        return f"{str(self.product)} / {self.quantity}ta / {self.user}"
 
 class Shipping(models.Model):
 
@@ -66,16 +56,13 @@ class Shipping(models.Model):
         Ready = "R", "Yo'lda"
         Delivered = "D", "Yetkazildi"
 
-    order = models.ManyToManyField(Order, related_name='shipping_order')
+    order = models.ManyToManyField(Order, related_name='shipping_order', blank=True)
     time = models.DateTimeField(auto_now_add=True)
     adress = models.TextField(max_length=1000)
     contact_for = models.CharField(max_length=20)
     status = models.CharField(max_length=1, choices=StatusChoice.choices, default=StatusChoice.Pending)
     total_price = models.PositiveBigIntegerField()
     is_paid = models.BooleanField(default=False)
-
-    def __str__(self):
-        return str(self.order)
 
     class Meta:
         verbose_name = "Yetkazib berish"

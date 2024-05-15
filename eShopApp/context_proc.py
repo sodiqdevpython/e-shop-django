@@ -12,7 +12,7 @@ def get_types_list(request):
 
 def purchasing(request):
     if request.user.is_authenticated:
-        order_list = Order.objects.filter(user=request.user)
+        order_list = Order.objects.filter(user=request.user, is_shipped=False)
         price = 0
         for i in order_list:
             price = price + i.quantity * i.product.price

@@ -4,21 +4,34 @@
 		<!-- SECTION -->
 		<div class="section">
 			<!-- container -->
+			{% if price != 0 %}
 			<div class="container">
 				<!-- row -->
-				<div class="row">
+				<form action="{% url 'checkout' %}" method="post">
+					{% csrf_token %}
 
 					<div class="col-md-7">
 						<!-- Shiping Details -->
 
 						<!-- Order notes -->
 						<div class="order-notes">
-							<label>Manzilingizni kiriting</label>
-							<textarea class="input" placeholder="Manzil"></textarea>
+							<label>Telefon raqamingiz</label>
+							<input name="contact_for" type="tel" class="form-control" required>
 						</div>
+						<input type="hidden" name="total_price" value="{{ price }}">
+						<div class="order-notes">
+							<label>Manzilingizni kiriting</label>
+							<textarea name="adress" class="input" required></textarea>
+						</div>
+						<select name="order" class="form-select" multiple aria-label="Multiple select example">
+							{% for i in user_orders %}
+							  <option value="{{i.id}}">{{ i.product }}</option>
+							{% endfor %}
+						</select>
 						<!-- /Order notes -->
+						<input type="submit" class="primary-btn order-submit" value="Buyurtma qilish"/>
 					</div>
-
+				</form>
 					<!-- Order Details -->
 					<div class="col-md-5 order-details">
 						<div class="section-title text-center">
@@ -51,12 +64,17 @@
 								<div><strong class="order-total">{{ price|sum_converter }} so'm</strong></div>
 							</div>
 						</div>
-						<a href="#" class="primary-btn order-submit">Buyurtma qilish</a>
+
 					</div>
 					<!-- /Order Details -->
 				</div>
 				<!-- /row -->
 			</div>
+			{% else %}
+			<div class="container">
+				<h2>Sizda hali buyurtmalar mavjud emas</h2>
+			</div>
+			{% endif %}
 			<!-- /container -->
 		</div>
 		<!-- /SECTION -->

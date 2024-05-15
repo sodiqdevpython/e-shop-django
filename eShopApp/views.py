@@ -3,7 +3,7 @@ from django.db.models import Q
 from .models import Product, MoreImages, Order
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from .forms import CreateOrderForm
+from .forms import CreateOrderForm, ShippingForm
 from django.contrib import messages
 
 
@@ -92,16 +92,33 @@ def detail_products(request, id):
 
 
 def login(request):
-    return render(request, 'login.html')
+    return render(request, 'auth/login.html')
 
 @login_required
 def checkout(request):
+    user_orders = Order.objects.filter(user=request.user, is_shipped=False)
+    if request.method == 'POST':
+        form = ShippingForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+            Order.objects.filter(user=request.user, is_shipped=False).update(is_shipped=True)
+            return redirect('home')
+        else:
+            print(form.errors)
+    else:
+        form = ShippingForm()
 
-    return render(request, 'checkout.html')
+    context = {
+        'form': form,
+        'user_orders': user_orders
+    }
+
+    return render(request, 'checkout.html', context)
+
 
 @login_required
 def delete_order(request, id):
-    if request.method=='POST':
+    if request.method == 'POST':
         data = get_object_or_404(Order, id=id)
         data.delete()
         return redirect('checkout')
