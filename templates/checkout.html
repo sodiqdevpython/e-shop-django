@@ -23,9 +23,9 @@
 							<label>Manzilingizni kiriting</label>
 							<textarea name="adress" class="input" required></textarea>
 						</div>
-						<select name="order" class="form-select" multiple aria-label="Multiple select example">
+						<select style="display: none;" name="order" class="form-select" multiple aria-label="Multiple select example">
 							{% for i in user_orders %}
-							  <option value="{{i.id}}">{{ i.product }}</option>
+							  <option value="{{i.id}}" selected>{{ i.product }}</option>
 							{% endfor %}
 						</select>
 						<!-- /Order notes -->
