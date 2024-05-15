@@ -8,8 +8,8 @@ from django.contrib import messages
 
 
 def home(request):
-    get_data_header = Product.objects.all()[:3]
-    last_products = Product.objects.all()[:4][::-1]
+    get_data_header = Product.objects.all().order_by('-id')[:3]
+    last_products = Product.objects.all().order_by('-id')[:4][::-1]
     cheaper_products1 = Product.objects.all().order_by('price')[0:3]
     most_purchased1 = Product.objects.all().order_by('?')[:3]
     most_purchased2 = Product.objects.all().order_by('?')[4:6]
