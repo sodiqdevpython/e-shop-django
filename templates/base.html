@@ -47,7 +47,11 @@
 					</ul>
 					<ul class="header-links pull-right">
 						<li><a href="#"><i class="fa fa-dollar"></i> SO'M</a></li>
-						<li><h2 style="color: white;"><i class="fa fa-user-o"></i> {{ request.user }}</h2></li>
+						{% if request.user.is_authenticated %}
+							<li><h2 style="color: white;"><i class="fa fa-user-o"></i> {{ request.user }}</h2></li>
+						{% else %}
+							<li><a href="{% url 'login' %}" style="color: white;"><i class="fa fa-user-o"></i> Kirish</a></li>
+						{% endif %}
 					</ul>
 				</div>
 			</div>
@@ -141,6 +145,14 @@
 						<li class="active"><a href="{% url 'home' %}">Asosiy</a></li>
 						<li><a href="{% url 'store' %}">Mahsulotlar</a></li>
 						<li><a href="{% url 'checkout' %}">Buyurtmalar</a></li>
+						{% if request.user.is_authenticated %}
+							<form action="{% url 'logout' %}" method="post">
+								{% csrf_token %}
+								<li><input type="submit" class="btn btn-primary" value="Chiqish"></li>
+							</form>
+						{% else %}
+							<li><a href="{% url 'login' %}">Kirish</a></li>
+						{% endif %}
 					</ul>
 					<!-- /NAV -->
 				</div>
