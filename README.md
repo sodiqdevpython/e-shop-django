@@ -1,4 +1,5 @@
-Website url: https://estore1.pythonanywhere.com/
+URL of the website: https://estore1.pythonanywhere.com/
+
 DB design: https://drawsql.app/teams/sodiq-2/diagrams/e-commerce-db
 
 E-Shop with Telegram Integration
