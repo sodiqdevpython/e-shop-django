@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from .forms import CreateOrderForm, ShippingForm
 from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, logout
 
 
 def home(request):
@@ -89,10 +91,22 @@ def detail_products(request, id):
     }
 
     return render(request, 'product.html', context)
-
+from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.forms import AuthenticationForm
 
 def login(request):
-    return render(request, 'auth/login.html')
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                auth_login(request, user)
+                return redirect('home')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'auth/login.html', {'form': form})
 
 @login_required
 def checkout(request):
@@ -122,3 +136,20 @@ def delete_order(request, id):
         data = get_object_or_404(Order, id=id)
         data.delete()
         return redirect('checkout')
+
+def register_user(request):
+    if request.method=='POST':
+        form = UserCreationForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+        else:
+            return redirect('register_user')
+    else:
+        form = UserCreationForm()
+    
+    context = {
+        'form': form
+    }
+
+    return render(request, 'auth/register.html', context)

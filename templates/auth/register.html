@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <form method="POST" action="{% url 'register_user' %}">
+        {% csrf_token %}
+        <label>Foydalanuvchi nomi</label>
+        <input style="width: 50%;" type="text" name='username' class='form-control'>
+        <br>
+        <label>Parol</label>
+        <input style="width: 50%;" type="password" name="password1" class="form-control">
+        <br>
+        <label>Parolni takrorlang</label>
+        <input style="width: 50%;" type="password" name="password2" class="form-control">
+        <br>
+        <input type="submit" value="Kirish" class="btn btn-primary">
+    </form>
+</div>
+
+{% endblock content %}

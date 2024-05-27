@@ -2,9 +2,15 @@
 
 {% block content %}
 
-<div class="container">
-    <h2>Telegram orqali kirish mumkin</h2>
-    <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-login="sportshopt_bot" data-size="large" data-auth-url="https://estore1.pythonanywhere.com/auth/complete/telegram"></script>
+<div class="container mt-5">
+    <h4>Kirish</h2>
+        <form method="POST" action="{% url 'login' %}">{% csrf_token %}
+            <input type="text" name='username' class="form-control" style="width: 50%;">
+            <br>
+            <input type="password" name='password' class="form-control" style="width: 50%;"><br>
+            <input type="submit" value='Kirish' class='btn btn-primary'>
+        </form>
+    <a style="color:red;" href="{% url 'register_user' %}">Ro'yxatdan o'tish</a>
 </div>
 
 {% endblock content %}

@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import home, store, filtering_products, search, detail_products, checkout, delete_order, login
+from .views import home, store, filtering_products, search, detail_products, checkout, delete_order, login, register_user
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
@@ -11,5 +11,6 @@ urlpatterns = [
     path('checkout/', checkout, name='checkout'),
     path('delete_order/<int:id>/', delete_order, name='delete_order'),
     path('login/', login, name='login'),
-    path('logout/', LogoutView.as_view(), name='logout')
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('register-user/', register_user, name='register_user')
 ]
