@@ -46,7 +46,7 @@
 							{% for i in order_list %}
 								<div class="order-products">
 									<div class="order-col">
-										<div><a href="{% url 'product_detail' i.product.id %}">{{ i.product.name }} </a><span style="color: red;">{{ i.quantity }}ta</span></div>
+										<div><a href="{% url 'product_detail' i.product.id %}">{{ i.product.name }} </a><span style="color: red;">{{ i.quantity }} kg</span></div>
 										<div>
 											<!-- Add a unique ID to identify the span element -->
 											<span id="priceCalculs{{ forloop.counter }}"></span>

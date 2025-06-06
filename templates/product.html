@@ -25,7 +25,7 @@
 						<div id="product-imgs">
 							{% for i in more_images %}
 							<div class="product-preview">
-								<img src="{{ i.image.url }}" alt="">
+								<img  src="{{ i.image.url }}" alt="">
 							</div>
 							{% endfor %}
 						</div>
@@ -54,7 +54,7 @@
 											<span class="qty-up">+</span>
 											<span class="qty-down">-</span>
 										</div>
-										<span> ta</span>
+										<span> kg</span>
 									</div>
 									{% if request.user.is_authenticated %}
 										<button type="submit" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Savatga qo'shish</button>
